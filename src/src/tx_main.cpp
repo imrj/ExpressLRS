@@ -35,7 +35,7 @@ SX1280Driver Radio;
 #include "ESP32_WebUpdate.h"
 #endif
 
-#if defined(TARGET_R9M_TX) || defined(TARGET_TX_ES915TX)
+#if defined(TARGET_R9M_TX) || defined(TARGET_TX_ES915TX) || defined(TARGET_NAMIMNO_ALPHA_TX)
 #include "DAC.h"
 DAC TxDAC;
 #endif
@@ -44,7 +44,7 @@ DAC TxDAC;
 button button;
 #endif
 
-#ifdef TARGET_TX_GHOST
+#if (GPIO_PIN_LED_WS2812 != UNDEF_PIN) && (GPIO_PIN_LED_WS2812_FAST != UNDEF_PIN)
 uint8_t LEDfadeDiv;
 uint8_t LEDfade;
 bool LEDfadeDir;
@@ -623,7 +623,7 @@ void setup()
     #endif
   #endif // GPIO_PIN_BUZZER
 
-  #if defined(TARGET_R9M_TX) || defined(TARGET_TX_ES915TX)
+  #if defined(TARGET_R9M_TX) || defined(TARGET_TX_ES915TX) || defined(TARGET_NAMIMNO_ALPHA_TX)
     TxDAC.init();
   #endif
 

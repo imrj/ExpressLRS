@@ -119,7 +119,7 @@ void CRSF::Begin()
 
     #if defined(BUFFER_OE) && (BUFFER_OE != UNDEF_PIN)
     pinMode(BUFFER_OE, OUTPUT);
-    digitalWrite(BUFFER_OE, LOW);
+    digitalWrite(BUFFER_OE, LOW ^ BUFFER_OE_INVERTED);
     #endif
 
     CRSF::Port.setTx(GPIO_PIN_RCSIGNAL_TX);
@@ -591,7 +591,7 @@ void ICACHE_RAM_ATTR CRSF::duplex_set_RX()
     gpio_pulldown_dis((gpio_num_t)GPIO_PIN_RCSIGNAL_RX);
     #endif
 #elif defined(BUFFER_OE) && (BUFFER_OE != UNDEF_PIN)
-    digitalWrite(BUFFER_OE, LOW);
+    digitalWrite(BUFFER_OE, LOW ^ BUFFER_OE_INVERTED);
 #endif
 }
 
@@ -609,7 +609,7 @@ void ICACHE_RAM_ATTR CRSF::duplex_set_TX()
     gpio_matrix_out((gpio_num_t)GPIO_PIN_RCSIGNAL_TX, U1TXD_OUT_IDX, false, false);
     #endif
 #elif defined(BUFFER_OE) && (BUFFER_OE != UNDEF_PIN)
-    digitalWrite(BUFFER_OE, HIGH);
+    digitalWrite(BUFFER_OE, HIGH ^ BUFFER_OE_INVERTED);
 #endif
 }
 

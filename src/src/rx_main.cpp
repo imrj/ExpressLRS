@@ -53,7 +53,7 @@ uint32_t LEDupdateCounterMillis;
 #define SEND_LINK_STATS_TO_FC_INTERVAL 100
 ///////////////////
 
-#define DEBUG_SUPPRESS // supresses debug messages on uart
+// #define DEBUG_SUPPRESS // supresses debug messages on uart
 
 hwTimer hwTimer;
 GENERIC_CRC8 ota_crc(ELRS_CRC_POLY);
@@ -416,6 +416,12 @@ void ICACHE_RAM_ATTR UnpackChannelData_11bit()
     crsf.PackedRCdataOut.ch6 = BIT_to_CRSF(Radio.RXdataBuffer[6] & 0b00000010);
     crsf.PackedRCdataOut.ch7 = BIT_to_CRSF(Radio.RXdataBuffer[6] & 0b00000001);
 #endif
+
+    if ((Radio.RXdataBuffer[6] & 0b00001000) || (Radio.RXdataBuffer[6] & 0b00000100) || (Radio.RXdataBuffer[6] & 0b00000010) || (Radio.RXdataBuffer[6] & 0b00000001))
+    {
+        Serial.println("switch mismatch");
+    }
+
 }
 
 void ICACHE_RAM_ATTR UnpackChannelData_10bit()
@@ -468,13 +474,13 @@ void ICACHE_RAM_ATTR ProcessRFPacket()
     if (inCRC != calculatedCRC)
     {
         #ifndef DEBUG_SUPPRESS
-        Serial.print("CRC error on RF packet: ");
-        for (int i = 0; i < 8; i++)
-        {
-            Serial.print(Radio.RXdataBuffer[i], HEX);
-            Serial.print(",");
-        }
-        Serial.println("");
+        // Serial.print("CRC error on RF packet: ");
+        // for (int i = 0; i < 8; i++)
+        // {
+        //     Serial.print(Radio.RXdataBuffer[i], HEX);
+        //     Serial.print(",");
+        // }
+        // Serial.println("");
         #endif
         return;
     }
@@ -533,7 +539,7 @@ void ICACHE_RAM_ATTR ProcessRFPacket()
          {
              LastSyncPacket = millis();
 #ifndef DEBUG_SUPPRESS
-             Serial.println("sync");
+            //  Serial.println("sync");
 #endif
 
              if (ExpressLRS_currAirRate_Modparams->TLMinterval != (expresslrs_tlm_ratio_e)TLMrateIn)
@@ -592,13 +598,13 @@ void ICACHE_RAM_ATTR ProcessRFPacket()
     doneProcessing = micros();
 
 #ifndef DEBUG_SUPPRESS
-    Serial.print(RawOffset);
-    Serial.print(":");
-    Serial.print(Offset);
-    Serial.print(":");
-    Serial.print(OffsetDx);
-    Serial.print(":");
-    Serial.println(uplinkLQ);
+    // Serial.print(RawOffset);
+    // Serial.print(":");
+    // Serial.print(Offset);
+    // Serial.print(":");
+    // Serial.print(OffsetDx);
+    // Serial.print(":");
+    // Serial.println(uplinkLQ);
 #endif
 }
 

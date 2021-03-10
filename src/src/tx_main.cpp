@@ -238,10 +238,14 @@ void ICACHE_RAM_ATTR Generate4ChannelData_11bit()
   Radio.TXdataBuffer[6] = ((crsf.ChannelDataIn[2] & 0b001) << 7) +
                           ((crsf.ChannelDataIn[3] & 0b111) << 4); // 4 bits left over for something else?
 #ifdef One_Bit_Switches
-  Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[4]) << 3;
-  Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[5]) << 2;
-  Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[6]) << 1;
-  Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[7]) << 0;
+  // Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[4]) << 3;
+  // Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[5]) << 2;
+  // Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[6]) << 1;
+  // Radio.TXdataBuffer[6] += CRSF_to_BIT(crsf.ChannelDataIn[7]) << 0;
+  Radio.TXdataBuffer[6] += 0;
+  Radio.TXdataBuffer[6] += 0;
+  Radio.TXdataBuffer[6] += 0;
+  Radio.TXdataBuffer[6] += 0;
 #endif
 }
 
